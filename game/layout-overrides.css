@@ -1,6 +1,7 @@
 :root {
   --story-font-size: 0.74rem !important;
   --input-font-size: 0.78rem !important;
+  --frame-width: 70vw;
 }
 
 body[data-story-font="small"] {
@@ -18,10 +19,63 @@ body[data-story-font="large"] {
   --input-font-size: 0.92rem !important;
 }
 
-/* Keep the screenshot-approved artwork/parchment proportions aligned. */
+/* Desktop diagnostic width control: artwork and parchment always track together. */
 #scene-panel,
 #story-panel {
-  width: min(2560px, calc(100% - 0.5rem), calc((100dvh - 245px) * 16 / 9)) !important;
+  width: min(var(--frame-width), calc(100vw - 1.2rem), 2560px) !important;
+  max-width: none !important;
+}
+
+/* Let the page accommodate deliberately oversized desktop frames during tuning. */
+#inner {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.display-controls {
+  position: absolute;
+  top: 0.36rem;
+  right: 0.75rem;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.font-size-controls,
+.frame-width-controls {
+  position: static !important;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.frame-width-controls {
+  padding: 0.1rem 0.22rem;
+  border: 1px solid rgba(75,47,29,0.28);
+  background: rgba(238,218,164,0.58);
+  border-radius: 3px;
+  font: 700 0.72rem/1 "IM Fell English", Georgia, serif;
+  color: #4f2f1c;
+}
+
+.frame-width-controls button,
+.font-size-controls button {
+  min-width: 1.8rem;
+  height: 1.55rem;
+  padding: 0 0.3rem;
+  border: 1px solid rgba(75,47,29,0.5);
+  border-radius: 3px;
+  background: rgba(238,218,164,0.78);
+  color: #4f2f1c;
+  font: 700 0.72rem/1 "IM Fell English", Georgia, serif;
+  cursor: pointer;
+}
+
+#frame-width-value {
+  min-width: 2.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 /* The command row remains readable but occupies about half the previous height. */
@@ -51,6 +105,23 @@ body[data-story-font="large"] {
 }
 
 @media (max-width: 700px) {
+  :root {
+    --frame-width: calc(100vw - 0.45rem);
+  }
+
+  #scene-panel,
+  #story-panel {
+    width: calc(100vw - 0.45rem) !important;
+  }
+
+  .frame-width-controls {
+    display: none;
+  }
+
+  .display-controls {
+    right: 0.5rem;
+  }
+
   /* Retain usable tap/typing behaviour on phones while keeping the smaller visual scale. */
   #input input,
   #textbox {
