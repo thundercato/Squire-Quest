@@ -81,26 +81,6 @@ function setStoryFontSize(size) {
   window.requestAnimationFrame(scrollStoryToBottom)
 }
 
-function setFrameWidth(percent) {
-  const allowed = [55, 60, 65, 70, 75, 80, 85, 90, 95, 98]
-  let selected = Number(percent)
-  if (!allowed.includes(selected)) selected = 70
-
-  document.body.setAttribute('data-frame-width', String(selected))
-  document.documentElement.style.setProperty('--frame-width', selected + 'vw')
-
-  const value = document.querySelector('#frame-width-value')
-  if (value) value.textContent = selected + '%'
-}
-
-function adjustFrameWidth(direction) {
-  const allowed = [55, 60, 65, 70, 75, 80, 85, 90, 95, 98]
-  const current = Number(document.body.getAttribute('data-frame-width')) || 70
-  const index = Math.max(0, allowed.indexOf(current))
-  const nextIndex = Math.min(allowed.length - 1, Math.max(0, index + direction))
-  setFrameWidth(allowed[nextIndex])
-}
-
 function dismissOpeningScreen() {
   const opening = document.querySelector('#opening-screen')
   if (!opening || opening.hidden || opening.classList.contains('is-leaving')) return
@@ -147,11 +127,9 @@ function setupSquireQuestUI() {
   const travel = document.querySelector('#travel-screen')
   const output = document.querySelector('#output')
   const fontControls = document.querySelector('#font-size-controls')
-  const frameControls = document.querySelector('#frame-width-controls')
 
   setParserInputEnabled(false)
   setStoryFontSize('normal')
-  setFrameWidth(70)
 
   if (opening) opening.addEventListener('click', dismissOpeningScreen)
   if (travel) travel.addEventListener('click', dismissTravelInterlude)
@@ -161,14 +139,6 @@ function setupSquireQuestUI() {
       const button = event.target.closest('button[data-font-size]')
       if (!button) return
       setStoryFontSize(button.getAttribute('data-font-size'))
-    })
-  }
-
-  if (frameControls) {
-    frameControls.addEventListener('click', function (event) {
-      const button = event.target.closest('button[data-frame-action]')
-      if (!button) return
-      adjustFrameWidth(button.getAttribute('data-frame-action') === 'larger' ? 1 : -1)
     })
   }
 

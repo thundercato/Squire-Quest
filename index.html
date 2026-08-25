@@ -9,7 +9,7 @@
   <title>Squire Quest I: The Dragon Slayer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=IM+Fell+English:ital@0;1&family=Marck+Script&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" crossorigin="anonymous" />
   <script>
     const folder = 'game/'
@@ -51,7 +51,7 @@
     document.head.appendChild(gameSettings)
   </script>
 </head>
-<body data-story-font="normal" data-frame-width="70">
+<body data-story-font="normal">
   <div id="opening-screen" class="full-screen-card" aria-label="Squire Quest opening title">
     <div class="manuscript-card title-card">
       <div class="title-kicker">GAC Software Inc. presents</div>
@@ -83,11 +83,6 @@
       </section>
       <section id="story-panel" aria-label="Game text and command input">
         <div id="display-controls" class="display-controls" aria-label="Display controls">
-          <div id="frame-width-controls" class="frame-width-controls" aria-label="Game frame width">
-            <button type="button" data-frame-action="smaller" aria-label="Make game frame narrower">−</button>
-            <span id="frame-width-value" aria-live="polite">70%</span>
-            <button type="button" data-frame-action="larger" aria-label="Make game frame wider">+</button>
-          </div>
           <div id="font-size-controls" class="font-size-controls" aria-label="Story text size">
             <button type="button" data-font-size="small" aria-label="Smaller story text">A−</button>
             <button type="button" data-font-size="normal" aria-label="Default story text" aria-pressed="true">A</button>

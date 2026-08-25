@@ -180,8 +180,11 @@ The graphical text-adventure interface should behave as a fixed game frame rathe
 - Room artwork sits in a consistent-height framed area with a restrained medieval dark-wood/gold border supplied by the interface rather than baked into individual image assets.
 - Artwork must never be stretched. Different source aspect ratios may be contained inside the consistent frame while preserving their proportions.
 - The upper room-name/artwork area remains visible while playing.
-- The text/history/parser area below is a separate flexible pane occupying the remaining viewport height. It is visually styled as a parchment scroll with mottled paper and rolled-looking top/bottom edges. Command history scrolls inside that pane rather than pushing the artwork off-screen.
-- The command input remains at the bottom of the text pane.
+- The text/history/parser area below is a separate flexible pane occupying the remaining viewport height. It uses the supplied transparent `assets/images/ui/parchment-scroll.png` artwork as its full background. The command-history and input layers remain distinct but have fully transparent backgrounds so both sit naturally on the same scroll.
+- The command input remains at the bottom of the text pane. Its rectangular field styling is removed, leaving the right-facing parser arrow, script text and native flashing caret.
+- The game frame is fixed at the agreed 55% desktop width. The temporary frame-width adjustment control has been removed.
+- The three text-size controls remain available at the top-right of the viewport; the centre control always restores the default size.
+- Story history and parser input use a joined handwritten script face with sensible cursive fallbacks.
 - Room artwork uses a roughly half-second fade transition during room changes so transitions feel deliberate without slowing play.
 - The desktop game frame is deliberately wider than the initial prototype while continuing to scale responsively on phones and smaller displays.
 - The main `Squire Quest I: The Dragon Slayer` branding appears on the opening title presentation rather than remaining permanently above every room.
