@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Squire Quest browser smoke test</title></head>
+<body data-smoke-status="running">
+  <p id="result">running</p>
+  <iframe id="game" src="../index.html" style="width:1280px;height:720px"></iframe>
+  <script>
+    'use strict'
+    const frame = document.getElementById('game')
+    const result = document.getElementById('result')
+
+    function finish(status, detail) {
+      document.body.setAttribute('data-smoke-status', status)
+      result.textContent = status + ': ' + detail
+    }
+
+    frame.addEventListener('load', function () {
+      window.setTimeout(function () {
+        try {
+          const win = frame.contentWindow
+          const before = win.eval('currentLocation.name')
+          win.eval("parser.parse('west')")
+          window.setTimeout(function () {
+            try {
+              const after = win.eval('currentLocation.name')
+              const output = win.document.querySelector('#output')
+              const text = output ? output.textContent : ''
+              if (/Oh dear|coding error|hit an error/i.test(text)) {
+                finish('fail', 'QuestJS reported a runtime error after WEST. ' + text.slice(-500))
+              }
+              else if (before !== 'eastern_dock' || after !== 'main_dock') {
+                finish('fail', 'Unexpected movement state: ' + before + ' -> ' + after)
+              }
+              else {
+                finish('pass', 'WEST moved eastern_dock -> main_dock without a runtime error')
+              }
+            }
+            catch (err) {
+              finish('fail', String(err && err.stack ? err.stack : err))
+            }
+          }, 1200)
+        }
+        catch (err) {
+          finish('fail', String(err && err.stack ? err.stack : err))
+        }
+      }, 1800)
+    })
+  </script>
+</body>
+</html>
