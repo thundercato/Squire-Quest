@@ -39,8 +39,8 @@ createRoom('southern_gate', {
   south: new Exit('main_dock'),
   north: new Exit('town_sq_s'),
   beforeEnter: function (exit) {
-    if (exit && exit.origin && exit.origin.name === 'main_dock') {
-      msg('You follow the well-worn path through the woodland. Some twenty minutes later, the walls of Castle Kamalot finally loom ahead.')
+    if (exit && exit.origin && exit.origin.name === 'main_dock' && typeof showTravelInterlude === 'function') {
+      showTravelInterlude('You leave the docks behind and follow the well-worn path inland. For the next twenty minutes, woodland closes around you as the cries of the gulls fade into the distance. At last, the trees thin and the Southern Gate of Castle Kamalot rises ahead.')
     }
   },
 })
