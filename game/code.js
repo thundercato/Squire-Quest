@@ -13,6 +13,18 @@ function getFreshAssetUrl(path) {
   return path
 }
 
+function showBlankRoomFrame(image, art) {
+  art.hidden = false
+  art.classList.add('is-placeholder')
+  image.hidden = true
+  image.removeAttribute('src')
+  image.removeAttribute('data-room-image')
+  image.alt = ''
+  image.onload = null
+  image.onerror = null
+  image.classList.remove('is-fading')
+}
+
 function updateRoomPresentation() {
   const image = document.querySelector('#room-image')
   const art = document.querySelector('#room-art')
@@ -22,15 +34,12 @@ function updateRoomPresentation() {
   title.textContent = getRoomDisplayName()
 
   if (!currentLocation.roomImage) {
-    image.hidden = true
-    image.removeAttribute('src')
-    image.removeAttribute('data-room-image')
-    image.alt = ''
-    art.hidden = true
+    showBlankRoomFrame(image, art)
     return
   }
 
   art.hidden = false
+  art.classList.remove('is-placeholder')
   image.hidden = false
 
   const nextAsset = currentLocation.roomImage
@@ -46,13 +55,22 @@ function updateRoomPresentation() {
   image.classList.add('is-fading')
   window.setTimeout(function () {
     image.onload = function () {
+      art.classList.remove('is-placeholder')
+      image.hidden = false
       image.classList.remove('is-fading')
       image.onload = null
+      image.onerror = null
+    }
+    image.onerror = function () {
+      showBlankRoomFrame(image, art)
     }
     image.src = nextSrc
     image.setAttribute('data-room-image', nextAsset)
     image.alt = nextAlt
-    if (image.complete) image.classList.remove('is-fading')
+    if (image.complete && image.naturalWidth > 0) {
+      art.classList.remove('is-placeholder')
+      image.classList.remove('is-fading')
+    }
   }, 300)
 }
 
