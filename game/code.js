@@ -69,6 +69,18 @@ function setParserInputEnabled(enabled) {
   if (enabled) textbox.focus()
 }
 
+function setStoryFontSize(size) {
+  const allowed = ['small', 'normal', 'large']
+  const selected = allowed.includes(size) ? size : 'normal'
+  document.body.setAttribute('data-story-font', selected)
+
+  document.querySelectorAll('#font-size-controls button').forEach(function (button) {
+    button.setAttribute('aria-pressed', button.getAttribute('data-font-size') === selected ? 'true' : 'false')
+  })
+
+  window.requestAnimationFrame(scrollStoryToBottom)
+}
+
 function dismissOpeningScreen() {
   const opening = document.querySelector('#opening-screen')
   if (!opening || opening.hidden || opening.classList.contains('is-leaving')) return
@@ -114,11 +126,21 @@ function setupSquireQuestUI() {
   const opening = document.querySelector('#opening-screen')
   const travel = document.querySelector('#travel-screen')
   const output = document.querySelector('#output')
+  const fontControls = document.querySelector('#font-size-controls')
 
   setParserInputEnabled(false)
+  setStoryFontSize('normal')
 
   if (opening) opening.addEventListener('click', dismissOpeningScreen)
   if (travel) travel.addEventListener('click', dismissTravelInterlude)
+
+  if (fontControls) {
+    fontControls.addEventListener('click', function (event) {
+      const button = event.target.closest('button[data-font-size]')
+      if (!button) return
+      setStoryFontSize(button.getAttribute('data-font-size'))
+    })
+  }
 
   document.addEventListener('keydown', function (event) {
     const allowed = event.key === 'Enter' || event.key === ' ' || event.key === 'Escape'
