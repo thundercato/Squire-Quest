@@ -8,6 +8,11 @@ function getRoomDisplayName() {
   return currentLocation.alias || currentLocation.name || ''
 }
 
+function getFreshAssetUrl(path) {
+  if (typeof squireQuestFreshUrl === 'function') return squireQuestFreshUrl(path)
+  return path
+}
+
 function updateRoomPresentation() {
   const image = document.querySelector('#room-image')
   const art = document.querySelector('#room-art')
@@ -19,6 +24,7 @@ function updateRoomPresentation() {
   if (!currentLocation.roomImage) {
     image.hidden = true
     image.removeAttribute('src')
+    image.removeAttribute('data-room-image')
     image.alt = ''
     art.hidden = true
     return
@@ -27,10 +33,11 @@ function updateRoomPresentation() {
   art.hidden = false
   image.hidden = false
 
-  const nextSrc = currentLocation.roomImage
+  const nextAsset = currentLocation.roomImage
+  const nextSrc = getFreshAssetUrl(nextAsset)
   const nextAlt = currentLocation.roomImageAlt || getRoomDisplayName()
 
-  if (image.getAttribute('src') === nextSrc) {
+  if (image.getAttribute('data-room-image') === nextAsset) {
     image.alt = nextAlt
     image.classList.remove('is-fading')
     return
@@ -43,6 +50,7 @@ function updateRoomPresentation() {
       image.onload = null
     }
     image.src = nextSrc
+    image.setAttribute('data-room-image', nextAsset)
     image.alt = nextAlt
     if (image.complete) image.classList.remove('is-fading')
   }, 300)
