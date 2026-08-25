@@ -39,11 +39,13 @@ jobs:
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
           if [ -z "$CHROME" ]; then
             echo '<body data-smoke-status="fail"><pre>No Chrome/Chromium binary available</pre></body>' > /tmp/squire-smoke.html
+            echo 'No Chrome/Chromium binary available' > /tmp/squire-chrome.log
             exit 0
           fi
 
-          "$CHROME" --headless=new --no-sandbox --disable-gpu --virtual-time-budget=8000 \
-            --dump-dom http://127.0.0.1:8765/tests/browser-smoke.html > /tmp/squire-smoke.html || true
+          "$CHROME" --headless=new --no-sandbox --disable-gpu --enable-logging=stderr --v=0 \
+            --virtual-time-budget=8000 --dump-dom http://127.0.0.1:8765/tests/browser-smoke.html \
+            > /tmp/squire-smoke.html 2> /tmp/squire-chrome.log || true
           cp /tmp/squire-http.log /tmp/squire-http.log.saved || true
       - name: Upload smoke diagnostics
         if: always()
@@ -53,9 +55,12 @@ jobs:
           path: |
             /tmp/squire-smoke.html
             /tmp/squire-http.log.saved
+            /tmp/squire-chrome.log
       - name: Verify browser movement smoke test
         run: |
           cat /tmp/squire-smoke.html
+          echo '--- Chrome console ---'
+          cat /tmp/squire-chrome.log
           grep -q 'data-smoke-status="pass"' /tmp/squire-smoke.html
       - name: Configure Pages
         uses: actions/configure-pages@v5
