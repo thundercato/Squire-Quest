@@ -176,16 +176,22 @@ The graphical text-adventure interface should behave as a fixed game frame rathe
 
 - The overall page uses a warm aged-paper/parchment colour treatment rather than a plain white background.
 - Each room name is displayed above its artwork using a medieval/manuscript-style display font. The first letter is enlarged/decorative in the manner of an illuminated manuscript heading.
+- The first letter of each room description also uses an illuminated-manuscript treatment with a larger contrasting initial.
 - Room artwork sits in a consistent-height framed area with a restrained medieval dark-wood/gold border supplied by the interface rather than baked into individual image assets.
 - Artwork must never be stretched. Different source aspect ratios may be contained inside the consistent frame while preserving their proportions.
 - The upper room-name/artwork area remains visible while playing.
-- The text/history/parser area below is a separate flexible pane occupying the remaining viewport height. Command history scrolls inside that pane rather than pushing the artwork off-screen.
+- The text/history/parser area below is a separate flexible pane occupying the remaining viewport height. It is visually styled as a parchment scroll with mottled paper and rolled-looking top/bottom edges. Command history scrolls inside that pane rather than pushing the artwork off-screen.
 - The command input remains at the bottom of the text pane.
-- Room artwork should fade out/in quickly during room changes, targeting substantially less than one second so transitions feel deliberate without slowing play.
+- Room artwork uses a roughly half-second fade transition during room changes so transitions feel deliberate without slowing play.
+- The desktop game frame is deliberately wider than the initial prototype while continuing to scale responsively on phones and smaller displays.
 - The main `Squire Quest I: The Dragon Slayer` branding appears on the opening title presentation rather than remaining permanently above every room.
 - The opening presentation identifies **Chapter 1: Gimme Gimme Gimme Fried Chicken!** and continues by tap/click or Enter.
 - Travel/cutscene interludes may temporarily replace the normal room interface with a full-screen parchment/manuscript presentation and require a tap/click or Enter to continue.
 - A simulated retro disk-drive loading sound is a possible future polish feature, but no sound asset or behaviour is currently locked.
+
+### Development cache policy
+
+While the game is under active development, every fresh page load must assume that local game assets may have changed. The browser build therefore appends a unique per-load cache-busting token to local game JavaScript, CSS and room artwork URLs. This is intentionally development-oriented behaviour so artwork and interface changes appear without users having to clear their browser cache manually. It can be removed or replaced with normal versioned caching for a production release.
 
 ## 8. Content Preservation Rules
 
@@ -227,4 +233,4 @@ This README is intended to evolve alongside Squire Quest. New confirmed material
 
 ## 11. Current Status
 
-Repository initialised on 25 August 2026. Opening design pass locks the Eastern Dock, Main Dock, Western Dock and first-pass Southern Gate presentation/state logic. The first graphical QuestJS prototype is published through GitHub Pages. The parchment fixed-frame interface, room-title treatment, Chapter 1 title presentation, quick artwork fades and Main Dock-to-Southern Gate travel interlude are now locked. Town Square and later rooms remain to be reviewed room-by-room.
+Repository initialised on 25 August 2026. Opening design pass locks the Eastern Dock, Main Dock, Western Dock and first-pass Southern Gate presentation/state logic. The first graphical QuestJS prototype is published through GitHub Pages. The parchment fixed-frame interface, room-title treatment, Chapter 1 title presentation, artwork fades, Main Dock-to-Southern Gate travel interlude and development cache-busting behaviour are now locked. Town Square and later rooms remain to be reviewed room-by-room.
