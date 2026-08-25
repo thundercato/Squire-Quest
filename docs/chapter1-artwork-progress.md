@@ -1,9 +1,9 @@
 # Chapter One Artwork Progress
 
 - Total room screens: **39**
-- Completed artwork count: **14**
-- Remaining artwork count: **25**
-- Current batch number: **1**
+- Completed artwork count: **24**
+- Remaining artwork count: **15**
+- Current batch number: **2**
 
 ## Completed filenames
 
@@ -21,21 +21,31 @@
 - `kfc-inside.png`
 - `four-u-inside.png`
 - `western-gate-inside.png`
+- `dragons-maw-outside.png`
+- `dragons-maw-inside.png`
+- `market.png`
+- `alleyway.png`
+- `alleyway-dead-end.png`
+- `castle-kitchen.png`
+- `western-gate-outside.png`
+- `forest-path.png`
+- `forest-crossroads.png`
+- `forest-clearing.png`
 
 ## Failed or pending filenames
 
-- None failed in Batch 1.
-- 25 manifest images remain pending.
+- None failed in Batch 2.
+- 15 manifest images remain pending.
 
 ## Next rooms scheduled
 
-1. The Dragons Maw (Outside) - `dragons-maw-outside.png`
-2. The Dragons Maw - `dragons-maw-inside.png`
-3. Market - `market.png`
-4. Alleyway - `alleyway.png`
-5. Alleyway Dead End - `alleyway-dead-end.png`
-6. Castle Kitchen - `castle-kitchen.png`
-7. Western Gate (Outside) - `western-gate-outside.png`
-8. Forest Path - `forest-path.png`
-9. Forest Crossroads - `forest-crossroads.png`
-10. Forest Clearing - `forest-clearing.png`
+1. Old Mill (Outside) - `old-mill-outside.png`
+2. Old Mill - `old-mill-inside.png`
+3. Cog House - `cog-house.png`
+4. Tree - `forest-tree.png`
+5. Top of Tree (Long Branch) - `tree-top.png`
+6. Waterfall - `waterfall.png`
+7. Cliffs - `cliffs.png`
+8. Plateau - `plateau.png`
+9. Top of Waterfall - `top-of-waterfall.png`
+10. Dungeon Cell I - `dungeon-cell-1.png`

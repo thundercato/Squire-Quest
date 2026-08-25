@@ -170,42 +170,54 @@ room(
   'dragons_maw_outside',
   'The Dragons Maw (Outside)',
   'The Dragon\'s Maw is an ancient timber tavern, perhaps older than the castle itself. Its sign shows a dragon\'s head with jaws spread wide. NORTH is the Western Gate, EAST Tourist Information and WEST takes you inside the tavern.',
-  { north: 'western_gate_inside', east: 'tourist_information', west: 'dragons_maw_inside' }
+  { north: 'western_gate_inside', east: 'tourist_information', west: 'dragons_maw_inside' },
+  'assets/images/rooms/dragons-maw-outside.png',
+  'The ancient timber Dragon\'s Maw tavern and its open-jawed dragon-head sign.'
 )
 
 room(
   'dragons_maw_inside',
   'The Dragons Maw',
   'Heavy beams cross the ceiling of a smoky medieval tavern. A fire crackles, barrels line the walls and patrons nurse drinks with varying degrees of success. An old knight and a dog named Scraps are among the regular fixtures. EAST returns outside.',
-  { east: 'dragons_maw_outside' }
+  { east: 'dragons_maw_outside' },
+  'assets/images/rooms/dragons-maw-inside.png',
+  'The smoky Dragon\'s Maw tavern with its hearth, barrels, Sir SoInSo and Scraps.'
 )
 
 room(
   'market',
   'Market',
   'A bustling market fills the north-west corner of the castle grounds. Fruit, meat, herbs and spices compete for attention while crates and barrels clutter the edges. EAST is the Commemorative Tree, SOUTH the Western Gate and NORTH WEST a narrow alleyway.',
-  { east: 'commemorative_tree', south: 'western_gate_inside', northwest: 'alleyway' }
+  { east: 'commemorative_tree', south: 'western_gate_inside', northwest: 'alleyway' },
+  'assets/images/rooms/market.png',
+  'Castle Kamalot\'s busy market with produce stalls, a herb merchant and a partly concealed alley route.'
 )
 
 room(
   'alleyway',
   'Alleyway',
   'A dark narrow alley hides behind the market. Rats treat it as a major transport route. The Castle Kitchen is reached to the NORTH EAST, a dead end lies NORTH and the Market is SOUTH EAST.',
-  { north: 'alleyway_dead_end', northeast: 'castle_kitchen', southeast: 'market' }
+  { north: 'alleyway_dead_end', northeast: 'castle_kitchen', southeast: 'market' },
+  'assets/images/rooms/alleyway.png',
+  'A dark narrow castle alley with rats and the wooden Castle Kitchen door.'
 )
 
 room(
   'alleyway_dead_end',
   'Alleyway Dead End',
   'The alley ends beneath a kitchen window. Old crates are stacked conveniently beneath it, providing a suspiciously climbable view into the Castle Kitchen. SOUTH returns along the alleyway.',
-  { south: 'alleyway' }
+  { south: 'alleyway' },
+  'assets/images/rooms/alleyway-dead-end.png',
+  'A cramped stone dead end with crates stacked beneath the lit Castle Kitchen window.'
 )
 
 room(
   'castle_kitchen',
   'Castle Kitchen',
   'The Castle Kitchen boils, hisses and smells faintly dangerous. A large angry chef works among chopping boards, pots, onions and fresh chicken while a blunt kitchen knife lies within reach. SOUTH WEST returns to the alleyway.',
-  { southwest: 'alleyway' }
+  { southwest: 'alleyway' },
+  'assets/images/rooms/castle-kitchen.png',
+  'The frantic Castle Kitchen with its stout chef, cooking pots, onions, fresh chicken and blunt knife.'
 )
 
 // -----------------------------------------------------------------------------
@@ -216,28 +228,36 @@ room(
   'western_gate_outside',
   'Western Gate (Outside)',
   'Outside the western castle wall, the road immediately gives way to forest. Castle stone rises behind you while dense foliage hems in the path. EAST returns inside the gate and WEST heads deeper into the trees.',
-  { east: 'western_gate_inside', west: 'forest_path' }
+  { east: 'western_gate_inside', west: 'forest_path' },
+  'assets/images/rooms/western-gate-outside.png',
+  'The exterior western wall and gate of Castle Kamalot where the road enters dense forest.'
 )
 
 room(
   'forest_path',
   'Forest Path',
   'A narrow path runs beneath thick woodland canopy. EAST leads back to Kamalot and WEST continues towards a forest crossroads.',
-  { east: 'western_gate_outside', west: 'forest_crossroads' }
+  { east: 'western_gate_outside', west: 'forest_crossroads' },
+  'assets/images/rooms/forest-path.png',
+  'A single narrow east-west path beneath the dense woodland canopy.'
 )
 
 room(
   'forest_crossroads',
   'Forest Crossroads',
   'Several forest routes meet beneath the trees. NORTH leads to a great tree, SOUTH to a clearing and EAST back towards Kamalot. The path WEST disappears into deeper forest, but that belongs to Chapter Two and refuses to become relevant early.',
-  { north: 'forest_tree', south: 'forest_clearing', east: 'forest_path' }
+  { north: 'forest_tree', south: 'forest_clearing', east: 'forest_path' },
+  'assets/images/rooms/forest-crossroads.png',
+  'A four-way forest junction with a dark forbidden-looking path into the deep western woods.'
 )
 
 room(
   'forest_clearing',
   'Forest Clearing',
   'The trees open into a broad clearing. It is the sort of place where trolls could ambush a mysterious hooded figure without first completing a risk assessment. NORTH returns to the crossroads and WEST leads to the Old Mill.',
-  { north: 'forest_crossroads', west: 'old_mill_outside' }
+  { north: 'forest_crossroads', west: 'old_mill_outside' },
+  'assets/images/rooms/forest-clearing.png',
+  'A broad empty woodland clearing with open space for a later encounter.'
 )
 
 room(
