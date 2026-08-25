@@ -2,8 +2,11 @@
 <html lang="en-GB">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Squire Quest I: The Dragon Slayer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" crossorigin="anonymous" />
   <script>
     const folder = 'game/'
@@ -21,14 +24,39 @@
   </script>
 </head>
 <body>
+  <div id="opening-screen" class="full-screen-card" aria-label="Squire Quest opening title">
+    <div class="manuscript-card title-card">
+      <div class="title-kicker">GAC Software Inc. presents</div>
+      <h1>Squire Quest I</h1>
+      <div class="game-subtitle">The Dragon Slayer</div>
+      <div class="chapter-rule" aria-hidden="true">◆</div>
+      <div class="chapter-number">Chapter 1</div>
+      <div class="chapter-title">Gimme Gimme Gimme Fried Chicken!</div>
+      <div class="continue-hint">Tap or press Enter to begin</div>
+    </div>
+  </div>
+
+  <div id="travel-screen" class="full-screen-card" hidden aria-live="assertive">
+    <div class="manuscript-card travel-card">
+      <div class="travel-ornament" aria-hidden="true">❧</div>
+      <p id="travel-text"></p>
+      <div class="continue-hint">Tap or press Enter to continue</div>
+    </div>
+  </div>
+
   <h1 id="loading">Squire Quest is loading...</h1>
   <main id="main">
     <div id="inner">
-      <div id="room-art" aria-live="polite">
-        <img id="room-image" alt="" hidden />
-      </div>
-      <div id="output"></div>
-      <div id="input"></div>
+      <section id="scene-panel" aria-live="polite">
+        <h2 id="room-title" class="room-title">Eastern Dock</h2>
+        <div id="room-art">
+          <img id="room-image" alt="" hidden />
+        </div>
+      </section>
+      <section id="story-panel" aria-label="Game text and command input">
+        <div id="output"></div>
+        <div id="input"></div>
+      </section>
     </div>
   </main>
   <dialog id="dialog">
