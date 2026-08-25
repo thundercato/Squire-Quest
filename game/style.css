@@ -5,7 +5,24 @@
   --wood: #4b2f1d;
   --wood-dark: #27170f;
   --gold: #9f7a2b;
-  --panel-gap: 0.8rem;
+  --panel-gap: 0.65rem;
+  --story-font-size: 0.92rem;
+  --input-font-size: 1rem;
+}
+
+body[data-story-font="small"] {
+  --story-font-size: 0.82rem;
+  --input-font-size: 0.92rem;
+}
+
+body[data-story-font="normal"] {
+  --story-font-size: 0.92rem;
+  --input-font-size: 1rem;
+}
+
+body[data-story-font="large"] {
+  --story-font-size: 1.06rem;
+  --input-font-size: 1.08rem;
 }
 
 html,
@@ -40,12 +57,13 @@ body {
 
 #inner {
   box-sizing: border-box;
-  width: min(1500px, 100%);
+  width: min(2560px, 100%);
   height: 100dvh;
   margin: 0 auto;
-  padding: max(1rem, env(safe-area-inset-top)) 0.3rem max(0.35rem, env(safe-area-inset-bottom));
+  padding: max(1rem, env(safe-area-inset-top)) 0.25rem max(0.35rem, env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--panel-gap);
   overflow: hidden;
 }
@@ -53,17 +71,17 @@ body {
 #scene-panel {
   flex: 0 0 auto;
   min-height: 0;
-  width: min(1280px, calc(100% - 1rem));
+  width: min(2560px, calc(100% - 0.5rem), calc((100dvh - 245px) * 16 / 9));
   margin: 0 auto;
   padding-top: 0.25rem;
 }
 
 .room-title {
-  margin: 0.2rem 0 0.5rem;
+  margin: 0.2rem 0 0.45rem;
   text-align: center;
   color: var(--wood-dark);
   font-family: "Cinzel Decorative", Georgia, serif;
-  font-size: clamp(1.15rem, 2.7vw, 2rem);
+  font-size: clamp(1.15rem, 2.3vw, 2rem);
   line-height: 1.08;
   letter-spacing: 0.035em;
   text-shadow: 0 1px 0 rgba(255,255,255,0.35);
@@ -101,9 +119,9 @@ body {
   outline: 2px solid var(--gold);
   outline-offset: -7px;
   box-shadow:
-    0 4px 12px rgba(42, 28, 15, 0.32),
-    inset 0 0 0 2px rgba(218, 180, 89, 0.30),
-    inset 0 0 18px rgba(0, 0, 0, 0.55);
+    0 4px 12px rgba(42,28,15,0.32),
+    inset 0 0 0 2px rgba(218,180,89,0.30),
+    inset 0 0 18px rgba(0,0,0,0.55);
 }
 
 #room-art[hidden],
@@ -117,8 +135,6 @@ body {
   height: 100% !important;
   max-width: none !important;
   max-height: none !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
   object-fit: cover !important;
   object-position: center center !important;
   margin: 0 !important;
@@ -136,12 +152,12 @@ body {
   position: relative;
   flex: 1 1 auto;
   min-height: 0;
-  width: calc(100% - 0.8rem);
+  width: min(2560px, calc(100% - 0.5rem), calc((100dvh - 245px) * 16 / 9));
   overflow: visible;
   display: flex;
   flex-direction: column;
-  margin: 1rem auto 0.95rem;
-  padding: 1.65rem 1.35rem 1.45rem;
+  margin: 0.85rem auto 0.95rem;
+  padding: 1.8rem 1.25rem 1.3rem;
   box-sizing: border-box;
   color: var(--ink);
   background:
@@ -200,6 +216,37 @@ body {
   transform: rotate(180deg);
 }
 
+.font-size-controls {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.85rem;
+  z-index: 4;
+  display: flex;
+  gap: 0.2rem;
+}
+
+.font-size-controls button {
+  min-width: 2rem;
+  height: 1.7rem;
+  padding: 0 0.35rem;
+  border: 1px solid rgba(75,47,29,0.5);
+  border-radius: 3px;
+  background: rgba(238,218,164,0.78);
+  color: #4f2f1c;
+  font: 700 0.74rem/1 "IM Fell English", Georgia, serif;
+  cursor: pointer;
+}
+
+.font-size-controls button[aria-pressed="true"] {
+  background: #7a4a29;
+  color: #f3e5b7;
+}
+
+.font-size-controls button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
 #output {
   position: relative;
   z-index: 1;
@@ -208,12 +255,12 @@ body {
   overflow-y: auto !important;
   overflow-x: hidden;
   box-sizing: border-box;
-  padding: 0.7rem 0.85rem 0.3rem;
+  padding: 0.55rem 0.75rem 0.25rem;
   scroll-behavior: smooth;
   color: var(--ink);
   font-family: "IM Fell English", Georgia, serif;
-  font-size: clamp(1rem, 1.7vw, 1.17rem);
-  line-height: 1.42;
+  font-size: var(--story-font-size);
+  line-height: 1.38;
   background:
     linear-gradient(90deg, rgba(91,53,22,0.035), transparent 8%, transparent 92%, rgba(91,53,22,0.035));
   border-top: 1px solid rgba(92,55,23,0.12);
@@ -227,9 +274,9 @@ body {
   box-sizing: border-box;
   display: flex !important;
   align-items: center !important;
-  gap: 0.45rem;
-  margin-top: 0.45rem;
-  padding: 0.55rem 0.15rem 0;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  padding: 0.45rem 0.1rem 0;
   border-top: 1px solid rgba(75,47,29,0.30);
   background: transparent;
 }
@@ -243,10 +290,9 @@ body {
   align-items: center !important;
   justify-content: center !important;
   align-self: stretch;
-  min-width: 1.25em;
+  min-width: 1.2em;
   color: #6f2f1c;
-  font: 700 1.08rem/1 "IM Fell English", Georgia, serif !important;
-  transform: translateY(-1px);
+  font: 700 var(--input-font-size)/1 "IM Fell English", Georgia, serif !important;
 }
 
 #inner-input {
@@ -261,13 +307,13 @@ body {
 #textbox {
   box-sizing: border-box;
   width: 100% !important;
-  min-height: 2.25rem;
+  min-height: 2.15rem;
   color: var(--ink) !important;
   background: linear-gradient(180deg, rgba(255,246,209,0.62), rgba(232,211,154,0.46)) !important;
   border: 1px solid rgba(75,47,29,0.48) !important;
   border-radius: 2px !important;
-  padding: 0.5rem 0.6rem !important;
-  font: 1.08rem/1.2 "IM Fell English", Georgia, serif !important;
+  padding: 0.44rem 0.55rem !important;
+  font: var(--input-font-size)/1.2 "IM Fell English", Georgia, serif !important;
   outline: none;
   box-shadow: inset 0 1px 4px rgba(80,49,19,0.08);
 }
@@ -376,17 +422,33 @@ body {
 
 @media (max-width: 700px) {
   :root {
-    --panel-gap: 0.5rem;
+    --panel-gap: 0.45rem;
+  }
+
+  body[data-story-font="small"] {
+    --story-font-size: 0.78rem;
+    --input-font-size: 1rem;
+  }
+
+  body[data-story-font="normal"] {
+    --story-font-size: 0.88rem;
+    --input-font-size: 1rem;
+  }
+
+  body[data-story-font="large"] {
+    --story-font-size: 1rem;
+    --input-font-size: 1.05rem;
   }
 
   #inner {
     padding-top: max(0.75rem, env(safe-area-inset-top));
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
+    padding-left: 0.15rem;
+    padding-right: 0.15rem;
   }
 
-  #scene-panel {
-    width: calc(100% - 0.5rem);
+  #scene-panel,
+  #story-panel {
+    width: calc(100% - 0.45rem);
   }
 
   .room-title {
@@ -395,24 +457,33 @@ body {
   }
 
   #story-panel {
-    width: calc(100% - 0.35rem);
-    margin-top: 0.75rem;
-    padding: 1.4rem 0.7rem 1.25rem;
+    margin-top: 0.7rem;
+    padding: 1.7rem 0.65rem 1.15rem;
+  }
+
+  .font-size-controls {
+    top: 0.35rem;
+    right: 0.55rem;
+  }
+
+  .font-size-controls button {
+    min-width: 2.15rem;
+    height: 1.8rem;
   }
 
   #output {
-    padding: 0.55rem 0.65rem 0.2rem;
-  }
-
-  #cursor {
-    font-size: 1rem !important;
-    min-width: 1.05em;
+    padding: 0.45rem 0.55rem 0.15rem;
   }
 }
 
 @media (max-height: 600px) and (orientation: landscape) {
   #inner {
     overflow-y: auto;
+  }
+
+  #scene-panel,
+  #story-panel {
+    width: min(1200px, calc(100% - 0.5rem));
   }
 
   .room-title {
