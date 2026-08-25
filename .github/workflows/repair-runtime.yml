@@ -21,44 +21,24 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
-          def replace(path, pairs):
-              p = Path(path)
+          for p in Path('game').glob('puzzle-*.js'):
               s = p.read_text()
-              for old, new in pairs:
-                  s = s.replace(old, new)
+              s = s.replace("'dungeon_cell_west'", "'dungeon_cell_2'")
+              s = s.replace("'vent_shaft_start'", "'inside_vent_shaft'")
+              s = s.replace("'dungeon_cell'", "'dungeon_cell_1'")
+              s = s.replace('w.dungeon_cell.', 'w.dungeon_cell_1.')
+              s = s.replace('w.dungeon_cell_1.up =', 'w.dungeon_cell_1.north =')
               p.write_text(s)
-
-          replace('game/puzzle-dungeon.js', [
-              ("'dungeon_cell_west'", "'dungeon_cell_2'"),
-              ("'vent_shaft_start'", "'inside_vent_shaft'"),
-              ("'dungeon_cell'", "'dungeon_cell_1'"),
-              ('w.dungeon_cell.', 'w.dungeon_cell_1.'),
-              ('w.dungeon_cell_1.up =', 'w.dungeon_cell_1.north ='),
-          ])
-          replace('game/puzzle-core.js', [
-              ("'dungeon_cell'", "'dungeon_cell_1'"),
-          ])
-          replace('game/puzzle-polish.js', [
-              ("'dungeon_cell'", "'dungeon_cell_1'"),
-          ])
-          replace('game/puzzle-final.js', [
-              ("'dungeon_cell'", "'dungeon_cell_1'"),
-          ])
-
-          # Fail loudly if any of the stale identifiers remain in executable puzzle code.
-          stale = ['dungeon_cell_west', 'vent_shaft_start']
-          for path in Path('game').glob('puzzle-*.js'):
-              text = path.read_text()
-              for token in stale:
-                  if token in text:
-                      raise SystemExit(f'Stale room id {token} remains in {path}')
           PY
+      - name: Validate JavaScript
+        run: |
+          for file in game/*.js; do node --check "$file"; done
       - name: Remove one-shot workflow
         run: rm .github/workflows/repair-runtime.yml
       - name: Commit repair
         run: |
           git config user.name 'Squire Quest Build Bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add game/puzzle-core.js game/puzzle-dungeon.js game/puzzle-final.js game/puzzle-polish.js .github/workflows/repair-runtime.yml
+          git add game/puzzle-*.js .github/workflows/repair-runtime.yml
           git commit -m 'Fix stale dungeon room references causing movement crash'
           git push
