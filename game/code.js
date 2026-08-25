@@ -5,6 +5,7 @@ let travelContinueHandler = null
 let roomAmbienceUnlocked = false
 let roomAmbienceAudio = null
 let roomAmbienceTrack = null
+let roomAmbienceTimer = null
 
 const ROOM_AMBIENCE = {
   eastern_dock: 'assets/audio/ocean-ambience.mp3',
@@ -13,7 +14,7 @@ const ROOM_AMBIENCE = {
 
   southern_gate: 'assets/audio/medieval-marketplace.mp3',
   tourist_information: 'assets/audio/medieval-marketplace.mp3',
-  castle_fountain: 'assets/audio/medieval-marketplace.mp3',
+  castle_fountain: 'assets/audio/castle-fountain-loop.mp3',
   commemorative_tree: 'assets/audio/medieval-marketplace.mp3',
   main_keep_entrance: 'assets/audio/medieval-marketplace.mp3',
   eastern_gate_inside: 'assets/audio/medieval-marketplace.mp3',
@@ -32,50 +33,77 @@ function getFreshAssetUrl(path) {
   return path
 }
 
+function fountainIsRunning() {
+  return !(typeof sq !== 'undefined' && sq && sq.fountainBroken)
+}
+
 function stopRoomAmbience() {
-  if (!roomAmbienceAudio) return
-  roomAmbienceAudio.pause()
-  roomAmbienceAudio.removeAttribute('src')
-  roomAmbienceAudio.load()
+  try {
+    if (!roomAmbienceAudio) return
+    roomAmbienceAudio.pause()
+    roomAmbienceAudio.removeAttribute('src')
+    roomAmbienceAudio.load()
+  }
+  catch (err) {
+    console.warn('Squire Quest ambience stop failed safely:', err)
+  }
   roomAmbienceTrack = null
 }
 
 function updateRoomAmbience() {
-  if (!roomAmbienceUnlocked || typeof currentLocation === 'undefined' || !currentLocation) return
+  try {
+    if (!roomAmbienceUnlocked || typeof currentLocation === 'undefined' || !currentLocation) return
 
-  const nextTrack = ROOM_AMBIENCE[currentLocation.name] || null
-  if (!nextTrack) {
+    let nextTrack = ROOM_AMBIENCE[currentLocation.name] || null
+    if (currentLocation.name === 'castle_fountain' && !fountainIsRunning()) nextTrack = null
+
+    if (!nextTrack) {
+      stopRoomAmbience()
+      return
+    }
+
+    if (!roomAmbienceAudio) {
+      roomAmbienceAudio = new window.Audio()
+      roomAmbienceAudio.loop = true
+      roomAmbienceAudio.preload = 'auto'
+      roomAmbienceAudio.volume = currentLocation.name === 'castle_fountain' ? 0.32 : 0.18
+    }
+
+    roomAmbienceAudio.volume = currentLocation.name === 'castle_fountain' ? 0.32 : 0.18
+
+    if (roomAmbienceTrack === nextTrack && !roomAmbienceAudio.paused) return
+
+    if (roomAmbienceTrack !== nextTrack) {
+      roomAmbienceAudio.pause()
+      roomAmbienceAudio.src = getFreshAssetUrl(nextTrack)
+      roomAmbienceTrack = nextTrack
+    }
+
+    const playPromise = roomAmbienceAudio.play()
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(function (err) {
+        console.warn('Squire Quest ambience playback was blocked or unavailable:', err)
+      })
+    }
+  }
+  catch (err) {
+    // Audio must never be able to break parser movement or gameplay.
+    console.warn('Squire Quest ambience failed safely:', err)
     stopRoomAmbience()
-    return
-  }
-
-  if (!roomAmbienceAudio) {
-    roomAmbienceAudio = new Audio()
-    roomAmbienceAudio.loop = true
-    roomAmbienceAudio.preload = 'auto'
-    roomAmbienceAudio.volume = 0.18
-  }
-
-  if (roomAmbienceTrack === nextTrack && !roomAmbienceAudio.paused) return
-
-  if (roomAmbienceTrack !== nextTrack) {
-    roomAmbienceAudio.pause()
-    roomAmbienceAudio.src = getFreshAssetUrl(nextTrack)
-    roomAmbienceTrack = nextTrack
-  }
-
-  const playPromise = roomAmbienceAudio.play()
-  if (playPromise && typeof playPromise.catch === 'function') {
-    playPromise.catch(function () {
-      // Browsers may still reject playback until a qualifying user gesture.
-    })
   }
 }
 
+function scheduleRoomAmbienceUpdate() {
+  if (roomAmbienceTimer) window.clearTimeout(roomAmbienceTimer)
+  roomAmbienceTimer = window.setTimeout(function () {
+    roomAmbienceTimer = null
+    updateRoomAmbience()
+  }, 0)
+}
+
 function unlockRoomAmbience() {
-  if (roomAmbienceUnlocked) return
-  roomAmbienceUnlocked = true
-  updateRoomAmbience()
+  if (!roomAmbienceUnlocked) roomAmbienceUnlocked = true
+  scheduleRoomAmbienceUpdate()
 }
 
 function showBlankRoomFrame(image, art) {
@@ -97,7 +125,10 @@ function updateRoomPresentation() {
   if (!image || !art || !title || typeof currentLocation === 'undefined') return
 
   title.textContent = getRoomDisplayName()
-  updateRoomAmbience()
+
+  // Keep browser audio APIs outside QuestJS's synchronous movement stack. A media
+  // decoding/autoplay failure must never turn a valid direction into a game error.
+  scheduleRoomAmbienceUpdate()
 
   if (!currentLocation.roomImage) {
     showBlankRoomFrame(image, art)
@@ -250,6 +281,8 @@ function setupSquireQuestUI() {
   if (output && typeof MutationObserver !== 'undefined') {
     const observer = new MutationObserver(function () {
       window.requestAnimationFrame(scrollStoryToBottom)
+      // Also catches in-room state changes, for example the fountain being broken.
+      scheduleRoomAmbienceUpdate()
     })
     observer.observe(output, { childList: true, subtree: true })
   }
