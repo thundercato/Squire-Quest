@@ -84,10 +84,14 @@ body {
 
 #room-art {
   box-sizing: border-box;
+  position: relative;
   width: 100%;
   height: clamp(180px, 42vh, 520px);
   padding: clamp(7px, 1vw, 12px);
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(135deg, #6a452a, #2e1a10 45%, #755131 100%);
   border: 3px solid var(--wood-dark);
   outline: 2px solid var(--gold);
@@ -100,14 +104,22 @@ body {
 
 #room-art[hidden],
 #room-image[hidden] {
-  display: none;
+  display: none !important;
 }
 
 #room-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  display: block !important;
+  flex: 0 1 auto;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
   background: #1d140e;
   opacity: 1;
   transition: opacity 0.56s ease;
