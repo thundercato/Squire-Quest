@@ -40,7 +40,7 @@ body {
 
 #inner {
   box-sizing: border-box;
-  width: min(1120px, 100%);
+  width: min(1344px, 100%);
   height: 100dvh;
   margin: 0 auto;
   padding: max(0.45rem, env(safe-area-inset-top)) 0.65rem max(0.45rem, env(safe-area-inset-bottom));
@@ -66,10 +66,20 @@ body {
   text-shadow: 0 1px 0 rgba(255,255,255,0.35);
 }
 
-.room-title::first-letter {
+.room-title::first-letter,
+.room-description::first-letter {
   font-size: 1.75em;
-  color: #6d351e;
+  color: #7a2f1d;
   line-height: 0.7;
+  font-family: "Cinzel Decorative", Georgia, serif;
+}
+
+.room-description::first-letter {
+  float: left;
+  font-size: 3.15em;
+  line-height: 0.78;
+  margin: 0.04em 0.08em 0 0;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
 }
 
 #room-art {
@@ -100,7 +110,7 @@ body {
   object-fit: contain;
   background: #1d140e;
   opacity: 1;
-  transition: opacity 0.28s ease;
+  transition: opacity 0.56s ease;
 }
 
 #room-image.is-fading {
@@ -108,17 +118,59 @@ body {
 }
 
 #story-panel {
+  position: relative;
   flex: 1 1 auto;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
-  background: rgba(236, 220, 169, 0.70);
-  border: 1px solid rgba(75, 47, 29, 0.48);
-  box-shadow: inset 0 0 18px rgba(101, 71, 32, 0.10);
+  margin: 0.7rem 0.35rem;
+  padding: 1.3rem 1.1rem;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255,255,255,0.20), transparent 20%),
+    radial-gradient(circle at 78% 72%, rgba(92,55,23,0.11), transparent 26%),
+    radial-gradient(circle at 58% 18%, rgba(102,67,30,0.08), transparent 18%),
+    linear-gradient(95deg, #e6d39b 0%, #d7bf7d 50%, #e1cc91 100%);
+  border-left: 1px solid rgba(93, 59, 30, 0.42);
+  border-right: 1px solid rgba(93, 59, 30, 0.42);
+  box-shadow:
+    0 7px 18px rgba(70, 44, 23, 0.22),
+    inset 0 0 34px rgba(101, 71, 32, 0.16);
+}
+
+#story-panel::before,
+#story-panel::after {
+  content: "";
+  position: absolute;
+  left: -0.45rem;
+  right: -0.45rem;
+  height: 1.2rem;
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid rgba(71, 43, 22, 0.52);
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,0.18), transparent 45%),
+    linear-gradient(90deg, #b79556, #ddc486 14%, #c8aa69 50%, #dec78c 86%, #a9884d);
+  box-shadow:
+    0 3px 6px rgba(67, 39, 18, 0.28),
+    inset 0 0 7px rgba(82, 51, 22, 0.26);
+}
+
+#story-panel::before {
+  top: -0.65rem;
+  border-radius: 48% 48% 28% 28% / 65% 65% 35% 35%;
+}
+
+#story-panel::after {
+  bottom: -0.65rem;
+  border-radius: 28% 28% 48% 48% / 35% 35% 65% 65%;
+  transform: rotate(180deg);
 }
 
 #output {
+  position: relative;
+  z-index: 1;
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto !important;
@@ -134,11 +186,14 @@ body {
 }
 
 #input {
+  position: relative;
+  z-index: 3;
   flex: 0 0 auto;
   box-sizing: border-box;
-  padding: 0.35rem 0.65rem 0.55rem;
-  border-top: 1px solid rgba(75, 47, 29, 0.35);
-  background: rgba(218, 197, 139, 0.92);
+  margin-top: 0.35rem;
+  padding: 0.4rem 0 0;
+  border-top: 1px solid rgba(75, 47, 29, 0.30);
+  background: transparent;
 }
 
 #input input,
@@ -146,8 +201,8 @@ body {
   box-sizing: border-box;
   width: 100% !important;
   color: var(--ink) !important;
-  background: rgba(248, 238, 200, 0.68) !important;
-  border: 1px solid rgba(75, 47, 29, 0.52) !important;
+  background: rgba(247, 234, 190, 0.46) !important;
+  border: 1px solid rgba(75, 47, 29, 0.45) !important;
   border-radius: 0 !important;
   padding: 0.48rem 0.55rem !important;
   font: 1rem "IM Fell English", Georgia, serif !important;
@@ -266,6 +321,12 @@ body {
 
   #room-art {
     height: clamp(165px, 37vh, 330px);
+  }
+
+  #story-panel {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    padding: 1rem 0.55rem;
   }
 
   #output {
