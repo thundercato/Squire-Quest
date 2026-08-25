@@ -46,7 +46,7 @@
     document.head.appendChild(gameSettings)
   </script>
 </head>
-<body>
+<body data-story-font="normal">
   <div id="opening-screen" class="full-screen-card" aria-label="Squire Quest opening title">
     <div class="manuscript-card title-card">
       <div class="title-kicker">GAC Software Inc. presents</div>
@@ -77,6 +77,11 @@
         </div>
       </section>
       <section id="story-panel" aria-label="Game text and command input">
+        <div id="font-size-controls" class="font-size-controls" aria-label="Story text size">
+          <button type="button" data-font-size="small" aria-label="Smaller story text">A−</button>
+          <button type="button" data-font-size="normal" aria-label="Default story text" aria-pressed="true">A</button>
+          <button type="button" data-font-size="large" aria-label="Larger story text">A+</button>
+        </div>
         <div id="output"></div>
         <div id="input"></div>
       </section>
