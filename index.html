@@ -51,7 +51,7 @@
     document.head.appendChild(gameSettings)
   </script>
 </head>
-<body data-story-font="normal">
+<body data-story-font="normal" data-frame-width="70">
   <div id="opening-screen" class="full-screen-card" aria-label="Squire Quest opening title">
     <div class="manuscript-card title-card">
       <div class="title-kicker">GAC Software Inc. presents</div>
@@ -82,10 +82,17 @@
         </div>
       </section>
       <section id="story-panel" aria-label="Game text and command input">
-        <div id="font-size-controls" class="font-size-controls" aria-label="Story text size">
-          <button type="button" data-font-size="small" aria-label="Smaller story text">A−</button>
-          <button type="button" data-font-size="normal" aria-label="Default story text" aria-pressed="true">A</button>
-          <button type="button" data-font-size="large" aria-label="Larger story text">A+</button>
+        <div id="display-controls" class="display-controls" aria-label="Display controls">
+          <div id="frame-width-controls" class="frame-width-controls" aria-label="Game frame width">
+            <button type="button" data-frame-action="smaller" aria-label="Make game frame narrower">−</button>
+            <span id="frame-width-value" aria-live="polite">70%</span>
+            <button type="button" data-frame-action="larger" aria-label="Make game frame wider">+</button>
+          </div>
+          <div id="font-size-controls" class="font-size-controls" aria-label="Story text size">
+            <button type="button" data-font-size="small" aria-label="Smaller story text">A−</button>
+            <button type="button" data-font-size="normal" aria-label="Default story text" aria-pressed="true">A</button>
+            <button type="button" data-font-size="large" aria-label="Larger story text">A+</button>
+          </div>
         </div>
         <div id="output"></div>
         <div id="input"></div>
