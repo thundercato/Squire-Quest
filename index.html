@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Squire Quest I: The Dragon Slayer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" crossorigin="anonymous" />
+  <script>
+    const folder = 'game/'
+    const qeditor = false
+    const resourcesFolder = 'https://cdn.jsdelivr.net/gh/ThePix/QuestJS@72fef6a7315b2d977d8b4f57c358a11ba85d765a/'
+  </script>
+  <script src="https://cdn.jsdelivr.net/gh/ThePix/QuestJS@72fef6a7315b2d977d8b4f57c358a11ba85d765a/lib/_util.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ThePix/QuestJS@72fef6a7315b2d977d8b4f57c358a11ba85d765a/lib/_settings.js"></script>
+  <script>
+    const gameSettings = document.createElement('script')
+    gameSettings.src = folder + 'settings.js'
+    gameSettings.onload = function () { settings.writeScript(folder, '', '') }
+    gameSettings.onerror = function () { console.error('Failed to load game/settings.js') }
+    document.head.appendChild(gameSettings)
+  </script>
+</head>
+<body>
+  <h1 id="loading">Squire Quest is loading...</h1>
+  <main id="main">
+    <div id="inner">
+      <div id="room-art" aria-live="polite">
+        <img id="room-image" alt="" hidden />
+      </div>
+      <div id="output"></div>
+      <div id="input"></div>
+    </div>
+  </main>
+  <dialog id="dialog">
+    <form method="dialog">
+      <h4 id="dialog-title"></h4>
+      <hr />
+      <div id="dialog-content"></div>
+      <div id="dialog-footer" style="text-align:right">
+        <hr />
+        <button id="dialog-button" value="default">Confirm</button>
+      </div>
+    </form>
+  </dialog>
+  <div id="quest-map"></div>
+  <div id="quest-image"></div>
+  <form style="display:none" id="fileDialogForm">
+    <input type="file" id="fileDialog" accept=".q6save" />
+  </form>
+</body>
+</html>
