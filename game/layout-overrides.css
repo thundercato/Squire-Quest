@@ -1,0 +1,65 @@
+:root {
+  --story-font-size: 0.74rem !important;
+  --input-font-size: 0.78rem !important;
+}
+
+body[data-story-font="small"] {
+  --story-font-size: 0.66rem !important;
+  --input-font-size: 0.72rem !important;
+}
+
+body[data-story-font="normal"] {
+  --story-font-size: 0.74rem !important;
+  --input-font-size: 0.78rem !important;
+}
+
+body[data-story-font="large"] {
+  --story-font-size: 0.82rem !important;
+  --input-font-size: 0.92rem !important;
+}
+
+/* Keep the screenshot-approved artwork/parchment proportions aligned. */
+#scene-panel,
+#story-panel {
+  width: min(2560px, calc(100% - 0.5rem), calc((100dvh - 245px) * 16 / 9)) !important;
+}
+
+/* The command row remains readable but occupies about half the previous height. */
+#input {
+  gap: 0.3rem !important;
+  margin-top: 0.18rem !important;
+  padding: 0.16rem 0.1rem 0 !important;
+}
+
+#inner-input {
+  min-height: 0 !important;
+}
+
+#input input,
+#textbox {
+  min-height: 1.1rem !important;
+  height: 1.25rem !important;
+  padding: 0.08rem 0.42rem !important;
+  font-size: var(--input-font-size) !important;
+  line-height: 1 !important;
+}
+
+#cursor {
+  min-width: 1em !important;
+  font-size: var(--input-font-size) !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 700px) {
+  /* Retain usable tap/typing behaviour on phones while keeping the smaller visual scale. */
+  #input input,
+  #textbox {
+    height: 1.55rem !important;
+    min-height: 1.55rem !important;
+    font-size: max(var(--input-font-size), 0.9rem) !important;
+  }
+
+  #cursor {
+    font-size: max(var(--input-font-size), 0.9rem) !important;
+  }
+}
