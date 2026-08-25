@@ -80,70 +80,90 @@ room(
   'tourist_information',
   'Tourist Information',
   'You are just inside the Southern Gate in a busy castle courtyard. A cheerful tourist information booth stands nearby, together with an abandoned wooden cart. NORTH lies the Castle Fountain, EAST the shops and Kamalot Fried Chicken, WEST the Dragon\'s Maw tavern, and SOUTH the gate.',
-  { north: 'castle_fountain', east: 'kfc_4u_outside', west: 'dragons_maw_outside', south: 'southern_gate' }
+  { north: 'castle_fountain', east: 'kfc_4u_outside', west: 'dragons_maw_outside', south: 'southern_gate' },
+  'assets/images/rooms/tourist-information.png',
+  'A busy Castle Kamalot courtyard with a tourist information booth and abandoned wooden cart.'
 )
 
 room(
   'castle_fountain',
   'Castle Fountain',
   'A grand white-limestone fountain dominates the courtyard, crowned by the statue of a heroic knight. Coins glitter beneath the water while a King\'s Guard watches the fountain with suspicious devotion. NORTH is the Commemorative Tree, SOUTH Tourist Information, WEST the Western Gate and EAST the Eastern Gate.',
-  { north: 'commemorative_tree', south: 'tourist_information', west: 'western_gate_inside', east: 'eastern_gate_inside' }
+  { north: 'commemorative_tree', south: 'tourist_information', west: 'western_gate_inside', east: 'eastern_gate_inside' },
+  'assets/images/rooms/castle-fountain.png',
+  'The grand white-limestone Castle Fountain, knight statue, coins and attending guard.'
 )
 
 room(
   'commemorative_tree',
   'Commemorative Tree',
   'A rare camphor tree grows beside the northern castle wall. A plaque commemorates the old battle in which Sir SoInSo defeated Dragon Lord Fire-Ra and lost an arm. EAST leads to the Main Keep entrance, WEST to the Market and SOUTH to the fountain.',
-  { east: 'main_keep_entrance', west: 'market', south: 'castle_fountain' }
+  { east: 'main_keep_entrance', west: 'market', south: 'castle_fountain' },
+  'assets/images/rooms/commemorative-tree.png',
+  'The commemorative camphor tree and memorial plaque beside Castle Kamalot\'s northern wall.'
 )
 
 room(
   'main_keep_entrance',
   'Main Keep Entrance',
   'An enormous arched wooden door marks the entrance to the Main Keep. A guard stands beside it, looking as though entry is a privilege rather than a direction. WEST is the Commemorative Tree, SOUTH the Eastern Gate, and NORTH leads into the Knights Room for this development build.',
-  { west: 'commemorative_tree', south: 'eastern_gate_inside', north: 'knights_room' }
+  { west: 'commemorative_tree', south: 'eastern_gate_inside', north: 'knights_room' },
+  'assets/images/rooms/main-keep-entrance.png',
+  'The enormous arched wooden doors of Castle Kamalot\'s Main Keep with a guard beside them.'
 )
 
 room(
   'knights_room',
   'Knights Room',
   'A private chamber inside the Main Keep reserved for knights of sufficient importance, or sufficient confidence to claim they are. A bed, table and assorted knightly clutter occupy the room. SOUTH returns to the Main Keep entrance.',
-  { south: 'main_keep_entrance' }
+  { south: 'main_keep_entrance' },
+  'assets/images/rooms/knights-room.png',
+  'A private knightly chamber with a large four-poster bed and sturdy wooden table.'
 )
 
 room(
   'eastern_gate_inside',
   'Eastern Gate (Inside)',
   'You stand inside the eastern castle gate. A guard watches the passage. NORTH is the Main Keep entrance, SOUTH the KFC and 4U shopfronts, and WEST the Castle Fountain.',
-  { north: 'main_keep_entrance', south: 'kfc_4u_outside', west: 'castle_fountain' }
+  { north: 'main_keep_entrance', south: 'kfc_4u_outside', west: 'castle_fountain' },
+  'assets/images/rooms/eastern-gate-inside.png',
+  'The eastern gate inside Castle Kamalot with a guard watching the branching courtyard routes.'
 )
 
 room(
   'kfc_4u_outside',
   'KFC & 4U Shops (Outside)',
   'Kamalot Fried Chicken occupies one shopfront while the neighbouring 4U premises looks ready to reinvent itself at a moment\'s notice. WEST returns to Tourist Information, NORTH to the Eastern Gate. You can ENTER KFC to the SOUTH or visit the 4U shop to the EAST in this development build.',
-  { west: 'tourist_information', north: 'eastern_gate_inside', south: 'kfc_inside', east: 'four_u_inside' }
+  { west: 'tourist_information', north: 'eastern_gate_inside', south: 'kfc_inside', east: 'four_u_inside' },
+  'assets/images/rooms/kfc-4u-outside.png',
+  'The adjoining Kamalot Fried Chicken and adaptable 4U medieval shopfronts.'
 )
 
 room(
   'kfc_inside',
   'Kamalot Fried Chicken',
   'A server waits behind the counter of Kamalot Fried Chicken. Cooking equipment fills the rear of the shop and a Fiery Fava Beans trial station sits nearby, currently looking far more innocent than its name suggests. NORTH returns outside.',
-  { north: 'kfc_4u_outside' }
+  { north: 'kfc_4u_outside' },
+  'assets/images/rooms/kfc-inside.png',
+  'The medieval Kamalot Fried Chicken counter, server, cooking area and Fiery Fava Beans station.'
 )
 
 room(
   'four_u_inside',
   '4U Shops',
   'The interior of 4U Shops is a retail identity crisis waiting to happen. Shelves, signs and suspiciously enthusiastic salesmanship surround Stan, the ever-present assistant. WEST returns outside.',
-  { west: 'kfc_4u_outside' }
+  { west: 'kfc_4u_outside' },
+  'assets/images/rooms/four-u-inside.png',
+  'The flexible, mostly empty medieval 4U shop interior with Stan waiting behind the counter.'
 )
 
 room(
   'western_gate_inside',
   'Western Gate (Inside)',
   'The western castle gate opens towards the forest road. A guard keeps watch for trolls and other inconveniences. NORTH is the Market, SOUTH the Dragon\'s Maw, EAST the Castle Fountain and WEST leads outside the castle.',
-  { north: 'market', south: 'dragons_maw_outside', east: 'castle_fountain', west: 'western_gate_outside' }
+  { north: 'market', south: 'dragons_maw_outside', east: 'castle_fountain', west: 'western_gate_outside' },
+  'assets/images/rooms/western-gate-inside.png',
+  'The guarded western gate inside Castle Kamalot, opening onto the forest road.'
 )
 
 room(
