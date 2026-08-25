@@ -90,9 +90,11 @@ This screen should remain comparatively quiet and uncluttered. Its job is to pro
 
 #### Travel interlude to Southern Gate
 
-Moving NORTH from the Main Dock should trigger a short travel interlude rather than an instantaneous room change. Presentation may be parchment/scroll style if Quest 6 permits, with text establishing that the player follows the woodland path for roughly twenty minutes before reaching the castle gate. The player then continues to the Southern Gate.
+Moving NORTH from the Main Dock should trigger a short travel interlude rather than an instantaneous room change. Presentation uses a parchment/manuscript-style full-screen card explaining that the player follows the woodland path for roughly twenty minutes before reaching the castle gate. The normal room interface is hidden during the interlude and the player continues by tapping/clicking or pressing Enter. The Southern Gate is then revealed.
 
-Exact interlude prose remains to be written.
+Current interlude prose:
+
+> You leave the docks behind and follow the well-worn path inland. For the next twenty minutes, woodland closes around you as the cries of the gulls fade into the distance. At last, the trees thin and the Southern Gate of Castle Kamalot rises ahead.
 
 ### Western Dock
 
@@ -168,7 +170,24 @@ References should:
 
 Current examples under development include the regulation-obsessed ship crewman, the fisherman, Biff at the Southern Gate and Old Man Emmett at the mill.
 
-## 7. Content Preservation Rules
+## 7. User Interface and Presentation
+
+The graphical text-adventure interface should behave as a fixed game frame rather than an endlessly growing web page.
+
+- The overall page uses a warm aged-paper/parchment colour treatment rather than a plain white background.
+- Each room name is displayed above its artwork using a medieval/manuscript-style display font. The first letter is enlarged/decorative in the manner of an illuminated manuscript heading.
+- Room artwork sits in a consistent-height framed area with a restrained medieval dark-wood/gold border supplied by the interface rather than baked into individual image assets.
+- Artwork must never be stretched. Different source aspect ratios may be contained inside the consistent frame while preserving their proportions.
+- The upper room-name/artwork area remains visible while playing.
+- The text/history/parser area below is a separate flexible pane occupying the remaining viewport height. Command history scrolls inside that pane rather than pushing the artwork off-screen.
+- The command input remains at the bottom of the text pane.
+- Room artwork should fade out/in quickly during room changes, targeting substantially less than one second so transitions feel deliberate without slowing play.
+- The main `Squire Quest I: The Dragon Slayer` branding appears on the opening title presentation rather than remaining permanently above every room.
+- The opening presentation identifies **Chapter 1: Gimme Gimme Gimme Fried Chicken!** and continues by tap/click or Enter.
+- Travel/cutscene interludes may temporarily replace the normal room interface with a full-screen parchment/manuscript presentation and require a tap/click or Enter to continue.
+- A simulated retro disk-drive loading sound is a possible future polish feature, but no sound asset or behaviour is currently locked.
+
+## 8. Content Preservation Rules
 
 Room identifiers and display names are separate concepts. Internal identifiers should remain stable unless a deliberate migration is agreed.
 
@@ -178,7 +197,7 @@ Direction names written in capitals, such as `NORTH` and `EAST`, are part of the
 
 The `^` appearing in source room text should be treated as meaningful legacy formatting until its intended rendering behaviour has been formally decided and implemented.
 
-## 8. AI / ChatGPT Development Protocol
+## 9. AI / ChatGPT Development Protocol
 
 For every AI-assisted development task in this repository:
 
@@ -190,7 +209,7 @@ For every AI-assisted development task in this repository:
 - When a new decision becomes canonical, update the relevant section of this README in the same branch/commit or explicitly explain why it has not been updated.
 - Commit messages should describe the actual change rather than vague labels such as `updates`.
 
-## 9. Living Design Bible
+## 10. Living Design Bible
 
 This README is intended to evolve alongside Squire Quest. New confirmed material should be added under appropriate sections, including:
 
@@ -206,6 +225,6 @@ This README is intended to evolve alongside Squire Quest. New confirmed material
 
 **Do not treat speculative discussion as canonical.** Only decisions that Adam explicitly confirms or locks in should be promoted into the design bible.
 
-## 10. Current Status
+## 11. Current Status
 
-Repository initialised on 25 August 2026. Opening design pass now locks the Eastern Dock, Main Dock, Western Dock and first-pass Southern Gate presentation/state logic. Town Square and later rooms remain to be reviewed room-by-room.
+Repository initialised on 25 August 2026. Opening design pass locks the Eastern Dock, Main Dock, Western Dock and first-pass Southern Gate presentation/state logic. The first graphical QuestJS prototype is published through GitHub Pages. The parchment fixed-frame interface, room-title treatment, Chapter 1 title presentation, quick artwork fades and Main Dock-to-Southern Gate travel interlude are now locked. Town Square and later rooms remain to be reviewed room-by-room.
