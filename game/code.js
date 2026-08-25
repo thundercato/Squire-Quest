@@ -2,6 +2,25 @@
 
 let squireQuestUiInitialised = false
 let travelContinueHandler = null
+let roomAmbienceUnlocked = false
+let roomAmbienceAudio = null
+let roomAmbienceTrack = null
+
+const ROOM_AMBIENCE = {
+  eastern_dock: 'assets/audio/ocean-ambience.mp3',
+  main_dock: 'assets/audio/ocean-ambience.mp3',
+  western_dock: 'assets/audio/ocean-ambience.mp3',
+
+  southern_gate: 'assets/audio/medieval-marketplace.mp3',
+  tourist_information: 'assets/audio/medieval-marketplace.mp3',
+  castle_fountain: 'assets/audio/medieval-marketplace.mp3',
+  commemorative_tree: 'assets/audio/medieval-marketplace.mp3',
+  main_keep_entrance: 'assets/audio/medieval-marketplace.mp3',
+  eastern_gate_inside: 'assets/audio/medieval-marketplace.mp3',
+  kfc_4u_outside: 'assets/audio/medieval-marketplace.mp3',
+  western_gate_inside: 'assets/audio/medieval-marketplace.mp3',
+  market: 'assets/audio/medieval-marketplace.mp3',
+}
 
 function getRoomDisplayName() {
   if (typeof currentLocation === 'undefined' || !currentLocation) return ''
@@ -11,6 +30,52 @@ function getRoomDisplayName() {
 function getFreshAssetUrl(path) {
   if (typeof squireQuestFreshUrl === 'function') return squireQuestFreshUrl(path)
   return path
+}
+
+function stopRoomAmbience() {
+  if (!roomAmbienceAudio) return
+  roomAmbienceAudio.pause()
+  roomAmbienceAudio.removeAttribute('src')
+  roomAmbienceAudio.load()
+  roomAmbienceTrack = null
+}
+
+function updateRoomAmbience() {
+  if (!roomAmbienceUnlocked || typeof currentLocation === 'undefined' || !currentLocation) return
+
+  const nextTrack = ROOM_AMBIENCE[currentLocation.name] || null
+  if (!nextTrack) {
+    stopRoomAmbience()
+    return
+  }
+
+  if (!roomAmbienceAudio) {
+    roomAmbienceAudio = new Audio()
+    roomAmbienceAudio.loop = true
+    roomAmbienceAudio.preload = 'auto'
+    roomAmbienceAudio.volume = 0.18
+  }
+
+  if (roomAmbienceTrack === nextTrack && !roomAmbienceAudio.paused) return
+
+  if (roomAmbienceTrack !== nextTrack) {
+    roomAmbienceAudio.pause()
+    roomAmbienceAudio.src = getFreshAssetUrl(nextTrack)
+    roomAmbienceTrack = nextTrack
+  }
+
+  const playPromise = roomAmbienceAudio.play()
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(function () {
+      // Browsers may still reject playback until a qualifying user gesture.
+    })
+  }
+}
+
+function unlockRoomAmbience() {
+  if (roomAmbienceUnlocked) return
+  roomAmbienceUnlocked = true
+  updateRoomAmbience()
 }
 
 function showBlankRoomFrame(image, art) {
@@ -32,6 +97,7 @@ function updateRoomPresentation() {
   if (!image || !art || !title || typeof currentLocation === 'undefined') return
 
   title.textContent = getRoomDisplayName()
+  updateRoomAmbience()
 
   if (!currentLocation.roomImage) {
     showBlankRoomFrame(image, art)
@@ -103,6 +169,7 @@ function dismissOpeningScreen() {
   const opening = document.querySelector('#opening-screen')
   if (!opening || opening.hidden || opening.classList.contains('is-leaving')) return
 
+  unlockRoomAmbience()
   opening.classList.add('is-leaving')
   window.setTimeout(function () {
     opening.hidden = true
@@ -149,6 +216,8 @@ function setupSquireQuestUI() {
   setParserInputEnabled(false)
   setStoryFontSize('normal')
 
+  document.addEventListener('pointerdown', unlockRoomAmbience, { once: true })
+
   if (opening) opening.addEventListener('click', dismissOpeningScreen)
   if (travel) travel.addEventListener('click', dismissTravelInterlude)
 
@@ -161,6 +230,8 @@ function setupSquireQuestUI() {
   }
 
   document.addEventListener('keydown', function (event) {
+    unlockRoomAmbience()
+
     const allowed = event.key === 'Enter' || event.key === ' ' || event.key === 'Escape'
     if (!allowed) return
 
