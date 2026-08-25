@@ -2,7 +2,7 @@
 
 settings.title = 'Squire Quest I: The Dragon Slayer'
 settings.author = 'Adam and Colin of GAC Software Inc.'
-settings.version = '0.2.1'
+settings.version = '0.2.2'
 settings.panes = 'none'
 settings.compassPane = false
 settings.statusPane = false
