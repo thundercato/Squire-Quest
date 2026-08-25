@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Squire Quest I: The Dragon Slayer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,13 +15,33 @@
     const folder = 'game/'
     const qeditor = false
     const resourcesFolder = 'https://cdn.jsdelivr.net/gh/ThePix/QuestJS@72fef6a7315b2d977d8b4f57c358a11ba85d765a/'
+    const squireQuestDevCacheToken = Date.now().toString(36) + Math.random().toString(36).slice(2)
+
+    function squireQuestFreshUrl(url) {
+      if (!url) return url
+      const separator = url.includes('?') ? '&' : '?'
+      return url + separator + 'sqdev=' + encodeURIComponent(squireQuestDevCacheToken)
+    }
   </script>
   <script src="https://cdn.jsdelivr.net/gh/ThePix/QuestJS@72fef6a7315b2d977d8b4f57c358a11ba85d765a/lib/_util.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/ThePix/QuestJS@72fef6a7315b2d977d8b4f57c358a11ba85d765a/lib/_settings.js"></script>
   <script>
     const gameSettings = document.createElement('script')
-    gameSettings.src = folder + 'settings.js'
-    gameSettings.onload = function () { settings.writeScript(folder, '', '') }
+    gameSettings.src = squireQuestFreshUrl(folder + 'settings.js')
+    gameSettings.onload = function () {
+      const originalLoadScript = settings.loadScript.bind(settings)
+      const originalLoadCssFile = settings.loadCssFile.bind(settings)
+
+      settings.loadScript = function (filename, doc) {
+        return originalLoadScript(squireQuestFreshUrl(filename), doc)
+      }
+
+      settings.loadCssFile = function (filename, doc, path) {
+        return originalLoadCssFile(squireQuestFreshUrl(filename), doc, path)
+      }
+
+      settings.writeScript(folder, '', '')
+    }
     gameSettings.onerror = function () { console.error('Failed to load game/settings.js') }
     document.head.appendChild(gameSettings)
   </script>
