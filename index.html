@@ -22,6 +22,11 @@
       const separator = url.includes('?') ? '&' : '?'
       return url + separator + 'sqdev=' + encodeURIComponent(squireQuestDevCacheToken)
     }
+
+    const layoutOverrides = document.createElement('link')
+    layoutOverrides.rel = 'stylesheet'
+    layoutOverrides.href = squireQuestFreshUrl('game/layout-overrides.css')
+    document.head.appendChild(layoutOverrides)
   </script>
   <script src="https://cdn.jsdelivr.net/gh/ThePix/QuestJS@72fef6a7315b2d977d8b4f57c358a11ba85d765a/lib/_util.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/ThePix/QuestJS@72fef6a7315b2d977d8b4f57c358a11ba85d765a/lib/_settings.js"></script>
