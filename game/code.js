@@ -45,7 +45,7 @@ function updateRoomPresentation() {
     image.src = nextSrc
     image.alt = nextAlt
     if (image.complete) image.classList.remove('is-fading')
-  }, 150)
+  }, 300)
 }
 
 function scrollStoryToBottom() {
