@@ -71,7 +71,7 @@ sqCmd('SqDeliverFinalChicken', [/^(?:give|leave|put|place|hand) (?:the )?(?:frie
   sqMsg('Later, off duty, you join other squires at the Dragon’s Maw. One drink becomes several. Next morning you wake in the abandoned cart beside Tourist Information cuddling ' + cuddle + '. Horns announce the joust.')
   sqMsg('Sir Arrogant charges Sir Just. Halfway down the list, pieces of Arrogant’s armour begin falling off. Sir Just knocks him cleanly from the saddle. Officials discover the armour was never properly fitted because his squire was absent. A major breach of the Squire’s Code. You are arrested and knocked unconscious.')
   Object.keys(w).forEach(function (key) { const item=w[key]; if (!item || item.room || item===player || item.name==='sq_brooch') return; if (item.loc===player.name) item.loc=undefined })
-  return sqMovePlayer('dungeon_cell')
+  return sqMovePlayer('dungeon_cell_1')
 })
 
 w.western_dock.desc = function () {

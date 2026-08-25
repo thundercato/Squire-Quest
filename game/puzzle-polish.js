@@ -76,7 +76,7 @@ sqScenery('sq_forest_trolls','forest_clearing','trolls',['troll','two trolls'],f
 sqScenery('sq_hooded_figure','forest_clearing','hooded figure',['figure','hooded woman'],function(){return sq.princessRescued?'The hooded figure was the Princess.':'A hooded figure is being menaced by the trolls.'})
 sqScenery('sq_waterfall_opening','waterfall','rock opening',['opening','hole','round opening'],function(){return sq.waterfallRestored?'The opening is hidden behind the restored waterfall.':'A rounded opening high in the rock marks where a much larger flow of water ought to be.'})
 sqScenery('sq_plateau_view','plateau','view',['forest','castle','valley'],'From the plateau the forest spreads below, with Castle Kamalot visible in the distance.')
-sqScenery('sq_dungeon_door','dungeon_cell','cell door',['door','locked door','prison door'],'A heavy locked cell door. Brute force would achieve little beyond entertaining the guard.')
+sqScenery('sq_dungeon_door','dungeon_cell_1','cell door',['door','locked door','prison door'],'A heavy locked cell door. Brute force would achieve little beyond entertaining the guard.')
 
 // A few natural alternative phrasings used repeatedly by modern players.
 sqCmd('SqAskFishermanBait', /^(?:ask|question) (?:the )?(?:fisherman|angler) (?:for|about) (?:bait|fish|fishing)$/i, function(){
