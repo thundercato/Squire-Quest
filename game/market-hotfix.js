@@ -9,6 +9,15 @@ sqCmd('SqRevealAlleyExpanded', [
   return sqMsg('Behind the crates, barrels and market clutter you discover a dark, narrow alley leading NORTHWEST.')
 })
 
+// Directional movement and natural-language entry share the same reveal state.
+w.market.northwest = new Exit('alleyway', {
+  use: function () {
+    if (!sq.alleyRevealed) return sqFail('You cannot see any route northwest until you investigate the market clutter.')
+    player.moveChar(this)
+    return true
+  }
+})
+
 sqCmd('SqEnterRevealedAlley', [
   /^(?:enter|go into|walk into|head into|move into|take|use) (?:the )?(?:alley|alleyway|narrow alley|dark alley)$/i
 ], function () {
