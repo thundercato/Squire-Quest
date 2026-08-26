@@ -102,6 +102,7 @@ body[data-story-font="large"] {
 
 /* Dedicated pre-title GAC Software presentation. */
 #gac-screen {
+  z-index: 10020 !important;
   background: #02030a !important;
   overflow: hidden;
 }
