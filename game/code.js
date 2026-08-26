@@ -3,24 +3,23 @@
 let squireQuestUiInitialised = false
 let travelContinueHandler = null
 let roomAmbienceUnlocked = false
-let roomAmbienceAudio = null
-let roomAmbienceTrack = null
 let roomAmbienceTimer = null
+let openingSequenceState = 'gac'
 
 const ROOM_AMBIENCE = {
-  eastern_dock: 'assets/audio/ocean-ambience.mp3',
-  main_dock: 'assets/audio/ocean-ambience.mp3',
-  western_dock: 'assets/audio/ocean-ambience.mp3',
+  eastern_dock: 'ocean',
+  main_dock: 'ocean',
+  western_dock: 'ocean',
 
-  southern_gate: 'assets/audio/medieval-marketplace.mp3',
-  tourist_information: 'assets/audio/medieval-marketplace.mp3',
-  castle_fountain: 'assets/audio/castle-fountain-loop.mp3',
-  commemorative_tree: 'assets/audio/medieval-marketplace.mp3',
-  main_keep_entrance: 'assets/audio/medieval-marketplace.mp3',
-  eastern_gate_inside: 'assets/audio/medieval-marketplace.mp3',
-  kfc_4u_outside: 'assets/audio/medieval-marketplace.mp3',
-  western_gate_inside: 'assets/audio/medieval-marketplace.mp3',
-  market: 'assets/audio/medieval-marketplace.mp3',
+  southern_gate: 'market',
+  tourist_information: 'market',
+  castle_fountain: 'fountain',
+  commemorative_tree: 'market',
+  main_keep_entrance: 'market',
+  eastern_gate_inside: 'market',
+  kfc_4u_outside: 'market',
+  western_gate_inside: 'market',
+  market: 'market',
 }
 
 function getRoomDisplayName() {
@@ -38,16 +37,7 @@ function fountainIsRunning() {
 }
 
 function stopRoomAmbience() {
-  try {
-    if (!roomAmbienceAudio) return
-    roomAmbienceAudio.pause()
-    roomAmbienceAudio.removeAttribute('src')
-    roomAmbienceAudio.load()
-  }
-  catch (err) {
-    console.warn('Squire Quest ambience stop failed safely:', err)
-  }
-  roomAmbienceTrack = null
+  if (typeof sqStopAmbience === 'function') sqStopAmbience()
 }
 
 function updateRoomAmbience() {
@@ -62,32 +52,12 @@ function updateRoomAmbience() {
       return
     }
 
-    if (!roomAmbienceAudio) {
-      roomAmbienceAudio = new window.Audio()
-      roomAmbienceAudio.loop = true
-      roomAmbienceAudio.preload = 'auto'
-      roomAmbienceAudio.volume = currentLocation.name === 'castle_fountain' ? 0.32 : 0.18
-    }
-
-    roomAmbienceAudio.volume = currentLocation.name === 'castle_fountain' ? 0.32 : 0.18
-
-    if (roomAmbienceTrack === nextTrack && !roomAmbienceAudio.paused) return
-
-    if (roomAmbienceTrack !== nextTrack) {
-      roomAmbienceAudio.pause()
-      roomAmbienceAudio.src = getFreshAssetUrl(nextTrack)
-      roomAmbienceTrack = nextTrack
-    }
-
-    const playPromise = roomAmbienceAudio.play()
-    if (playPromise && typeof playPromise.catch === 'function') {
-      playPromise.catch(function (err) {
-        console.warn('Squire Quest ambience playback was blocked or unavailable:', err)
-      })
+    if (typeof sqPlayAmbience === 'function') {
+      const volume = nextTrack === 'fountain' ? 0.28 : nextTrack === 'ocean' ? 0.16 : 0.14
+      sqPlayAmbience(nextTrack, volume)
     }
   }
   catch (err) {
-    // Audio must never be able to break parser movement or gameplay.
     console.warn('Squire Quest ambience failed safely:', err)
     stopRoomAmbience()
   }
@@ -125,9 +95,6 @@ function updateRoomPresentation() {
   if (!image || !art || !title || typeof currentLocation === 'undefined') return
 
   title.textContent = getRoomDisplayName()
-
-  // Keep browser audio APIs outside QuestJS's synchronous movement stack. A media
-  // decoding/autoplay failure must never turn a valid direction into a game error.
   scheduleRoomAmbienceUpdate()
 
   if (!currentLocation.roomImage) {
@@ -196,10 +163,51 @@ function setStoryFontSize(size) {
   window.requestAnimationFrame(scrollStoryToBottom)
 }
 
+function showTitleOpeningScreen() {
+  const gac = document.querySelector('#gac-screen')
+  const opening = document.querySelector('#opening-screen')
+  if (!opening || openingSequenceState === 'title') return
+
+  openingSequenceState = 'title'
+  if (gac) {
+    gac.classList.add('is-leaving')
+    window.setTimeout(function () {
+      gac.hidden = true
+      gac.classList.remove('is-leaving')
+    }, 420)
+  }
+
+  opening.hidden = false
+  opening.classList.remove('is-leaving')
+  window.requestAnimationFrame(function () {
+    opening.classList.add('is-arriving')
+    window.setTimeout(function () { opening.classList.remove('is-arriving') }, 520)
+  })
+}
+
+function beginGacOpeningSequence() {
+  if (openingSequenceState !== 'gac') return
+  openingSequenceState = 'fanfare'
+  const gac = document.querySelector('#gac-screen')
+  if (gac) {
+    const hint = gac.querySelector('.continue-hint')
+    if (hint) hint.textContent = 'GAC Software presents…'
+    gac.classList.add('is-playing')
+  }
+
+  if (typeof sqPlayOpeningFanfare === 'function') {
+    sqPlayOpeningFanfare(showTitleOpeningScreen)
+  }
+  else {
+    window.setTimeout(showTitleOpeningScreen, 2200)
+  }
+}
+
 function dismissOpeningScreen() {
   const opening = document.querySelector('#opening-screen')
-  if (!opening || opening.hidden || opening.classList.contains('is-leaving')) return
+  if (!opening || opening.hidden || opening.classList.contains('is-leaving') || openingSequenceState !== 'title') return
 
+  openingSequenceState = 'game'
   unlockRoomAmbience()
   opening.classList.add('is-leaving')
   window.setTimeout(function () {
@@ -207,7 +215,7 @@ function dismissOpeningScreen() {
     opening.classList.remove('is-leaving')
     setParserInputEnabled(true)
     scrollStoryToBottom()
-  }, 340)
+  }, 420)
 }
 
 function showTravelInterlude(text) {
@@ -239,6 +247,7 @@ function setupSquireQuestUI() {
   if (squireQuestUiInitialised) return
   squireQuestUiInitialised = true
 
+  const gac = document.querySelector('#gac-screen')
   const opening = document.querySelector('#opening-screen')
   const travel = document.querySelector('#travel-screen')
   const output = document.querySelector('#output')
@@ -247,8 +256,9 @@ function setupSquireQuestUI() {
   setParserInputEnabled(false)
   setStoryFontSize('normal')
 
-  document.addEventListener('pointerdown', unlockRoomAmbience, { once: true })
-
+  // The GAC card owns the first user gesture. Room ambience must not start under
+  // the opening fanfare.
+  if (gac) gac.addEventListener('click', beginGacOpeningSequence)
   if (opening) opening.addEventListener('click', dismissOpeningScreen)
   if (travel) travel.addEventListener('click', dismissTravelInterlude)
 
@@ -261,14 +271,18 @@ function setupSquireQuestUI() {
   }
 
   document.addEventListener('keydown', function (event) {
-    unlockRoomAmbience()
-
     const allowed = event.key === 'Enter' || event.key === ' ' || event.key === 'Escape'
     if (!allowed) return
 
     if (travel && !travel.hidden) {
       event.preventDefault()
       dismissTravelInterlude()
+      return
+    }
+
+    if (gac && !gac.hidden && (openingSequenceState === 'gac' || openingSequenceState === 'fanfare')) {
+      event.preventDefault()
+      if (openingSequenceState === 'gac') beginGacOpeningSequence()
       return
     }
 
@@ -281,7 +295,6 @@ function setupSquireQuestUI() {
   if (output && typeof MutationObserver !== 'undefined') {
     const observer = new MutationObserver(function () {
       window.requestAnimationFrame(scrollStoryToBottom)
-      // Also catches in-room state changes, for example the fountain being broken.
       scheduleRoomAmbienceUpdate()
     })
     observer.observe(output, { childList: true, subtree: true })
