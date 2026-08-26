@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">GAC Software Presents</title>
+  <desc id="desc">Retro fantasy GAC Software opening logo on a dark blue-black background.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#080b21"/>
+      <stop offset="1" stop-color="#02030a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff0a5"/>
+      <stop offset="0.32" stop-color="#f5c84b"/>
+      <stop offset="0.7" stop-color="#a86412"/>
+      <stop offset="1" stop-color="#6d3908"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <g opacity=".35" fill="#777ee6">
+    <circle cx="116" cy="102" r="2"/><circle cx="228" cy="180" r="1.5"/><circle cx="1080" cy="108" r="2"/><circle cx="1034" cy="224" r="1.5"/><circle cx="918" cy="76" r="1"/><circle cx="330" cy="92" r="1"/>
+  </g>
+  <path d="M640 100 L940 490 H340 Z" fill="none" stroke="#b87718" stroke-width="12" opacity=".82"/>
+  <path d="M640 125 L905 470 H375 Z" fill="none" stroke="#f0c45a" stroke-width="3" opacity=".8"/>
+  <g filter="url(#glow)" text-anchor="middle" font-family="Georgia,serif" font-weight="900">
+    <text x="640" y="388" font-size="246" letter-spacing="10" fill="url(#gold)" stroke="#4a2308" stroke-width="7">GAC</text>
+    <text x="640" y="492" font-size="70" letter-spacing="28" fill="#e8bc42">SOFTWARE</text>
+    <text x="640" y="574" font-size="48" letter-spacing="16" fill="#b78bff">PRESENTS</text>
+  </g>
+  <g transform="translate(440 88) rotate(-11)">
+    <path d="M0 80 C42 34 108 21 154 36 C125 4 100 -11 76 -35 C71 5 35 25 0 80 Z" fill="#5d3d9b" stroke="#e3c25d" stroke-width="5"/>
+    <path d="M-18 84 C50 68 119 70 182 91 C116 111 48 112 -18 84 Z" fill="#3d256f" stroke="#e3c25d" stroke-width="5"/>
+    <circle cx="91" cy="25" r="7" fill="#ffd96a"/><circle cx="54" cy="49" r="5" fill="#ffd96a"/>
+  </g>
+  <g stroke="#fff6bd" stroke-linecap="round" filter="url(#glow)">
+    <path d="M365 190 h72 M401 154 v72" stroke-width="7"/><path d="M375 164 l52 52 M427 164 l-52 52" stroke-width="4"/>
+  </g>
+</svg>
