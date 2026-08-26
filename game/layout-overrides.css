@@ -22,7 +22,6 @@ body[data-story-font="large"] {
   --input-font-size: 0.92rem !important;
 }
 
-/* Artwork is intentionally 15% smaller than the selected desktop frame width. */
 #scene-panel {
   width: min(var(--art-width), calc(100vw - 1.2rem), 2560px) !important;
   max-width: none !important;
@@ -30,7 +29,6 @@ body[data-story-font="large"] {
   z-index: 3;
 }
 
-/* The parchment is 30% wider than the artwork and tucks just behind its lower edge. */
 #story-panel {
   width: min(var(--scroll-width), calc(100vw - 0.8rem), 3328px) !important;
   max-width: none !important;
@@ -40,12 +38,10 @@ body[data-story-font="large"] {
   z-index: 1;
 }
 
-/* Ensure the readable story content begins below the overlapping artwork edge. */
 #output {
   padding-top: calc(0.55rem + (var(--scroll-overlap) * 0.35)) !important;
 }
 
-/* Let the page accommodate deliberately oversized desktop frames during tuning. */
 #inner {
   width: 100% !important;
   max-width: none !important;
@@ -79,7 +75,6 @@ body[data-story-font="large"] {
   cursor: pointer;
 }
 
-/* The command row remains readable but occupies about half the previous height. */
 #input {
   gap: 0.3rem !important;
   margin-top: 0.18rem !important;
@@ -105,6 +100,59 @@ body[data-story-font="large"] {
   line-height: 1 !important;
 }
 
+/* Dedicated pre-title GAC Software presentation. */
+#gac-screen {
+  background: #02030a !important;
+  overflow: hidden;
+}
+
+.gac-splash-wrap {
+  width: min(960px, 94vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gac-splash-logo {
+  display: block;
+  width: min(900px, 92vw);
+  max-height: 74vh;
+  object-fit: contain;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.42s ease, transform 0.42s ease;
+  filter: drop-shadow(0 0 24px rgba(219, 174, 67, 0.14));
+}
+
+#gac-screen .continue-hint {
+  margin-top: 0.65rem;
+  color: #d8c78a;
+  font-family: "IM Fell English", Georgia, serif;
+  font-size: clamp(0.68rem, 1.8vw, 0.86rem);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+#gac-screen.is-playing .gac-splash-logo {
+  transform: scale(1.012);
+}
+
+#gac-screen.is-leaving .gac-splash-logo {
+  opacity: 0;
+  transform: scale(1.025);
+}
+
+#opening-screen.is-arriving .manuscript-card {
+  animation: sqTitleArrive 0.5s ease both;
+}
+
+@keyframes sqTitleArrive {
+  from { opacity: 0; transform: translateY(8px) scale(0.992); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 @media (max-width: 700px) {
   :root {
     --frame-width: calc(100vw - 0.45rem);
@@ -127,7 +175,6 @@ body[data-story-font="large"] {
     right: 0.5rem;
   }
 
-  /* Retain usable tap/typing behaviour on phones while keeping the smaller visual scale. */
   #input input,
   #textbox {
     height: 1.55rem !important;
@@ -137,5 +184,10 @@ body[data-story-font="large"] {
 
   #cursor {
     font-size: max(var(--input-font-size), 0.9rem) !important;
+  }
+
+  .gac-splash-logo {
+    width: 96vw;
+    max-height: 68vh;
   }
 }
